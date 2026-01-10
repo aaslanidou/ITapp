@@ -14,7 +14,7 @@ class RoomForm(forms.ModelForm):
 class ComputerForm(forms.ModelForm):
     class Meta:
         model = Computer
-        fields = ['ip_address', 'pc_name', 'bria_number', 'status', 'notes', 'room', 'pos_x', 'pos_y']
+        fields = ['ip_address', 'pc_name', 'bria_number', 'status', 'notes','is_team_leader', 'room', 'pos_x', 'pos_y']
         widgets = {
             'pos_x': forms.HiddenInput(),
             'pos_y': forms.HiddenInput(),

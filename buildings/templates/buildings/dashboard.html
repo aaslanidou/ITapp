@@ -125,8 +125,24 @@ a.delete-link:hover {
   z-index: 10;
 }
  
+.computer-box.team-leader {
+  width: 120px;     /* μεγαλύτερο */
+  height: 70px;
+  border: 2px solid gold;
+}
   
-  
+.team-leader-label {
+    display: inline-flex;       /* inline και flex για σωστή στοίχιση */
+    align-items: center;        /* το checkbox ευθυγραμμισμένο με το κείμενο */
+    gap: 5px;                   /* μικρή απόσταση μεταξύ κειμένου και checkbox */
+    font-size: 12px;
+}
+
+.team-leader-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: default;
+}
   
 </style>
 </head>
@@ -178,25 +194,28 @@ a.delete-link:hover {
              style="width: {{ room.width }}px; height: {{ room.height }}px;">
 
           {% for computer in room.computers.all %}
-            <div class="computer-box
-              {% if computer.status == 'OK' %}ok
-              {% elif computer.status == 'WARNING' %}warning
-              {% else %}replace{% endif %}"
-
-              data-id="{{ computer.id }}"
-              data-ip="{{ computer.ip_address }}"
-              data-name="{{ computer.pc_name }}"
-              data-bria="{{ computer.bria_number }}"
-              data-status="{{ computer.status }}"
-              data-notes="{{ computer.notes }}"
-
-              style="left: {{ computer.pos_x }}px; top: {{ computer.pos_y }}px;">
-
-              {{ computer.ip_address }}
-
-              <a href="{% url 'edit_computer' computer.id %}" class="edit-link">Edit</a>
-              <a href="{% url 'delete_computer' computer.id %}" class="delete-link">Delete</a>
-            </div>
+            <div class="computer-box 
+                 {% if computer.status == 'OK' %}ok
+                 {% elif computer.status == 'WARNING' %}warning
+                 {% else %}replace{% endif %}
+                 {% if computer.is_team_leader %} team-leader{% endif %}"
+                 data-id="{{ computer.id }}"
+                 data-ip="{{ computer.ip_address }}"
+                 data-name="{{ computer.pc_name }}"
+                 data-bria="{{ computer.bria_number }}"
+                 data-status="{{ computer.status }}"
+                 data-notes="{{ computer.notes }}"
+                 style="left: {{ computer.pos_x }}px; top: {{ computer.pos_y }}px;">
+                  {{ computer.ip_address }}
+                  {% if computer.is_team_leader %}
+                    <span class="team-leader-label">
+                    <b>Team Leader</b>
+                    <input type="checkbox" checked disabled>
+                    </span>
+                {% endif %}
+            <a href="{% url 'edit_computer' computer.id %}">Edit</a>
+            <a href="{% url 'delete_computer' computer.id %}" class="delete-link">Delete</a>
+           </div>
           {% endfor %}
 
         </div>

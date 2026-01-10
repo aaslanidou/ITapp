@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Form</title>
-</head>
-<body>
-  <h1>Form</h1>
-  <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-  </form>
-  <a href="{% url 'dashboard' %}">Back to Dashboard</a>
-</body>
-</html>
+{% extends 'buildings/base.html' %}
+
+{% block title %}{{ form_title }}{% endblock %}
+
+{% block content %}
+<h2>{{ form_title }}</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" style="background-color: {{ button_color }}">{{ button_text }}</button>
+</form>
+{% endblock %}

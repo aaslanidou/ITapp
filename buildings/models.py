@@ -28,8 +28,10 @@ class Computer(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='OK')
     notes = models.TextField(blank=True)
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="computers")
-    pos_x = models.IntegerField(default=0)  # θέση στον άξονα X
-    pos_y = models.IntegerField(default=0)  # θέση στον άξονα Y
+    pos_x = models.IntegerField(default=0)
+    pos_y = models.IntegerField(default=0)
+
+    is_team_leader = models.BooleanField(default=False)  # νέο πεδίο
 
     def __str__(self):
         return f"{self.pc_name} ({self.ip_address})"

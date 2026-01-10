@@ -18,7 +18,12 @@ def add_building(request):
             return redirect('dashboard')
     else:
         form = BuildingForm()
-    return render(request, 'buildings/building_form.html', {'form': form})
+        return render(request, 'buildings/form_templates.html', {
+        'form': form,
+        'form_title': 'Add Building',
+        'button_text': 'Add Building',
+        'button_color': '#28a745'
+    })
 
 def edit_building(request, pk):
     building = get_object_or_404(Building, pk=pk)
@@ -29,7 +34,12 @@ def edit_building(request, pk):
             return redirect('dashboard')
     else:
         form = BuildingForm(instance=building)
-    return render(request, 'buildings/building_form.html', {'form': form})
+    return render(request, 'buildings/form_templates.html', {
+        'form': form,
+        'form_title': 'Edit Building',
+        'button_text': 'Update Building',
+        'button_color': '#007BFF'
+    })
 
 def delete_building(request, pk):
     building = get_object_or_404(Building, pk=pk)
@@ -45,7 +55,12 @@ def add_room(request):
             return redirect('dashboard')
     else:
         form = RoomForm()
-    return render(request, 'buildings/add_room.html', {'form': form})
+    return render(request, 'buildings/form_templates.html', {
+        'form': form,
+        'form_title': 'Add Room',
+        'button_text': 'Add Room',
+        'button_color': '#28a745'
+    })
 
 def edit_room(request, pk):
     room = get_object_or_404(Room, pk=pk)
@@ -56,12 +71,17 @@ def edit_room(request, pk):
             return redirect('dashboard')
     else:
         form = RoomForm(instance=room)
-    return render(request, 'buildings/room_form.html', {'form': form})
+    return render(request, 'buildings/form_templates.html', {
+        'form': form,
+        'form_title': 'Edit Room',
+        'button_text': 'Update Room',
+        'button_color': '#007BFF'
+    })
 
 def delete_room(request, pk):
-    room = get_object_or_404(Room, pk=pk)
-    room.delete()
-    return redirect('dashboard')
+     room = get_object_or_404(Room, pk=pk)
+     room.delete()
+     return redirect('dashboard')
 
 # Computer CRUD
 def add_computer(request):
@@ -72,7 +92,12 @@ def add_computer(request):
             return redirect('dashboard')
     else:
         form = ComputerForm()
-    return render(request, 'buildings/computer_form.html', {'form': form})
+    return render(request, 'buildings/form_templates.html', {
+        'form': form,
+        'form_title': 'Add Computer',
+        'button_text': 'Add Computer',
+        'button_color': '#28a745'
+    })
 
 def edit_computer(request, pk):
     computer = Computer.objects.get(id=pk)
@@ -83,7 +108,12 @@ def edit_computer(request, pk):
             return redirect('dashboard')
     else:
         form = ComputerForm(instance=computer)
-    return render(request, 'buildings/edit_computer.html', {'form': form})
+    return render(request, 'buildings/form_templates.html', {
+        'form': form,
+        'form_title': 'Edit Computer',
+        'button_text': 'Update Computer',
+        'button_color': '#007BFF'
+    })
 
 
 def delete_computer(request, pk):
