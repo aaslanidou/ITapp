@@ -26,11 +26,19 @@ The dashboard displays rooms and computers as **draggable boxes**, allowing you 
 2. Create a virtual environment:  python -m venv venv
 3. Activate the virtual environment:  venv\Scripts\activate  -> Windows   , source venv/bin/activate -> Linux / Mac
 4. Install dependencies: pip install -r requirements.txt
-5. Create and apply database migrations:  python manage.py makemigrations
+5. Create a .env file in the root of the project with the following variables:
+DJANGO_SECRET_KEY=<your-secret-key>
+DEBUG=True
+6.You can generate a random secret key using Python:
+
+from django.core.management.utils import get_random_secret_key
+print(get_random_secret_key())
+
+7. Create and apply database migrations:  python manage.py makemigrations
 python manage.py migrate
-6. Create a superuser (optional, for admin access):  python manage.py createsuperuser
-7. Run the development server: python manage.py runserver
-8. Open the browser at: http://127.0.0.1:8000
+8. Create a superuser (optional, for admin access):  python manage.py createsuperuser
+9. Run the development server: python manage.py runserver
+10. Open the browser at: http://127.0.0.1:8000
 
 Notes
 The venv/ folder is not included in the repository
