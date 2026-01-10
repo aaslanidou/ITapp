@@ -1,19 +1,24 @@
 # Virtual environment
 venv/
+ENV/
+env/
 
 # Python cache files
 __pycache__/
-*.pyc
 *.pyo
 *.pyd
-*.py[cod]
+
 
 # Database
 db.sqlite3
 
 # Django static files
 /staticfiles/
+*.sqlite3
 *.log
+*.pot
+*.pyc
+*.mo
 
 # OS files
 .DS_Store
@@ -22,6 +27,7 @@ Thumbs.db
 # IDE / Editor folders
 .vscode/
 .idea/
+*.code-workspace
 
 # Temporary files
 *.tmp
