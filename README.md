@@ -22,7 +22,7 @@ The dashboard displays rooms and computers as **draggable boxes**, allowing you 
   
 # Installation Instructions
 
-1. Clone the repository:  git clone https://github.com/<username>/ITapp.git
+1. Clone the repository:  git clone https://github.com/aaslanidou/ITapp.git
 2. Create a virtual environment:  python -m venv venv
 3. Activate the virtual environment:  venv\Scripts\activate  -> Windows   , source venv/bin/activate -> Linux / Mac
 4. Install dependencies: pip install -r requirements.txt
