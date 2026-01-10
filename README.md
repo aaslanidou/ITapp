@@ -14,12 +14,12 @@ The dashboard displays rooms and computers as **draggable boxes**, allowing you 
 - Pop-up confirmation for deletions
 - Responsive rooms with different sizes
 - Search computers by IP or PC name
-- 
+  
 # Prerequisites
 - Python 3.12+
 - Django 6.x
 - Git
-- 
+  
 # Installation Instructions
 
 1. Clone the repository:  git clone https://github.com/<username>/ITapp.git
