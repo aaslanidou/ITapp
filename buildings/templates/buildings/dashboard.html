@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>IT Dashboard</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; margin: 20px; 
+      background-color: #1e1e1e;  /* σκούρο γκρι / μαύρο */
+      color: white;
+    }
+    h1 { margin-bottom: 20px; }
+    
+    /* Κουμπιά Add */
+    .add-buttons a { 
+        display: inline-block; 
+        margin-right: 10px; 
+        padding: 5px 10px; 
+        background: #007BFF; 
+        color: white; 
+        text-decoration: none; 
+        border-radius: 4px;
+    }
+    .add-buttons a:hover { background: #0056b3; }
+
+    /* Wrapper για scroll */
+    .room-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: auto;
+        margin-bottom: 50px;
+    }
+
+    /* Σταθερή ή δυναμική αίθουσα */
+    .room-grid {
+        position: relative;
+        width: 1600px;   /* default, μπορεί να αλλάζει ανά room */
+        height: 900px;
+        border: 2px solid #555;
+        background: #2c2c2c;
+    }
+
+    /* Computer box */
+    .computer-box {
+        position: absolute;
+    width: 80px;
+    height: 50px;
+    color: white;       
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: normal;
+    word-wrap: break-word;
+    font-size: 12px;
+    padding: 3px;
+    line-height: 14px;
+    }
+
+    /* Χρώματα ανά status */
+    .computer-box.ok { background-color: #28a745; }       /* πράσινο */
+    .computer-box.warning { background-color: #ff9800; }  /* πορτοκαλί */
+    .computer-box.replace { background-color: #dc3545; }  /* κόκκινο */
+
+    /* Edit/Delete links */
+    .computer-box a {
+        display: block;
+        font-size: 10px;
+        color: white;             
+        text-decoration: underline;
+        background: rgba(0,0,0,0.25); 
+        border-radius: 2px;
+        padding: 0 2px;
+        margin-top: 1px;
+    }
+
+    /* Modal */
+    #modal { 
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: white; padding: 20px; border: 2px solid black; display: none; 
+        min-width: 300px; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        z-index: 100;
+    }
+    #modal button { margin-top: 10px; padding: 5px 10px; }
+
+    /* ACTION LINKS */
+a.edit-link {
+  color: #ffc107;   /* amber / yellow */
+  font-weight: bold;
+}
+
+a.delete-link {
+  color: #ff4d4d;   /* κόκκινο */
+  font-weight: bold;
+}
+
+a.edit-link:hover {
+  color: #ffdd57;
+}
+
+a.delete-link:hover {
+  color: #ff0000;
+}
+
+/* Computer box links – neutral */
+.computer-box a {
+  color: #f1f1f1;        
+  font-weight: normal;
+  background: rgba(0,0,0,0.35);
+}
+
+.computer-box a:hover {
+  color: #ffffff;
+}
+
+ /* όταν ΔΕΝ ταιριάζει στο search */
+.computer-box.dimmed {
+  opacity: 0.25;
+}
+
+/* όταν ταιριάζει */
+.computer-box.highlight {
+  box-shadow: 0 0 15px 4px #ffffff;
+  z-index: 10;
+}
+ 
+  
+  
+  
+</style>
+</head>
+<body>
+
+<h1>IT Dashboard</h1>
+
+<div class="add-buttons">
+  <a href="{% url 'add_building' %}">Add Building</a>
+  <a href="{% url 'add_room' %}">Add Room</a>
+  <a href="{% url 'add_computer' %}">Add Computer</a>
+</div>
+<hr>
+<div style="margin: 15px 0;">
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Search by IP or PC name..."
+    style="
+      width: 300px;
+      padding: 8px;
+      font-size: 14px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+    "
+  >
+</div>
+
+{% for building in buildings %}
+  <div class="building">
+
+    <h2>
+      🏢 {{ building.name }} ({{ building.address }})
+      <a href="{% url 'edit_building' building.id %}" class="edit-link">Edit</a>
+      <a href="{% url 'delete_building' building.id %}" class="delete-link">Delete</a>
+      
+    </h2>
+
+    {% for room in building.rooms.all %}
+      <h3>
+        🧩 {{ room.name }}
+        <a href="{% url 'edit_room' room.id %}" class="edit-link">Edit</a>
+        <a href="{% url 'delete_room' room.id %}" class="delete-link">Delete</a>
+      </h3>
+
+      <div class="room-wrapper" data-room="{{ room.id }}">
+        <div class="room-grid"
+             style="width: {{ room.width }}px; height: {{ room.height }}px;">
+
+          {% for computer in room.computers.all %}
+            <div class="computer-box
+              {% if computer.status == 'OK' %}ok
+              {% elif computer.status == 'WARNING' %}warning
+              {% else %}replace{% endif %}"
+
+              data-id="{{ computer.id }}"
+              data-ip="{{ computer.ip_address }}"
+              data-name="{{ computer.pc_name }}"
+              data-bria="{{ computer.bria_number }}"
+              data-status="{{ computer.status }}"
+              data-notes="{{ computer.notes }}"
+
+              style="left: {{ computer.pos_x }}px; top: {{ computer.pos_y }}px;">
+
+              {{ computer.ip_address }}
+
+              <a href="{% url 'edit_computer' computer.id %}" class="edit-link">Edit</a>
+              <a href="{% url 'delete_computer' computer.id %}" class="delete-link">Delete</a>
+            </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    {% endfor %}
+
+  </div>
+{% endfor %}
+
+<!-- MODAL -->
+<div id="modal">
+  <p id="details"></p>
+  <button onclick="document.getElementById('modal').style.display='none'">Close</button>
+</div>
+
+<script>
+// --- Modal με double-click ---
+document.querySelectorAll(".computer-box").forEach(box => {
+    box.addEventListener("dblclick", () => {
+        const ip = box.dataset.ip;
+        const name = box.dataset.name;
+        const bria = box.dataset.bria;
+        const status = box.dataset.status;
+        const notes = box.dataset.notes;
+
+        document.getElementById('details').innerHTML = `
+            <b>IP:</b> ${ip}<br>
+            <b>Name:</b> ${name}<br>
+            <b>Bria Number:</b> ${bria}<br>
+            <b>Status:</b> ${status}<br>
+            <b>Notes:</b> ${notes}
+        `;
+        document.getElementById('modal').style.display='block';
+    });
+});
+
+
+
+// --- Drag-and-drop με single click ---
+function makeDraggable(el) {
+    let offsetX, offsetY;
+
+    el.onmousedown = function(e) {
+        e.preventDefault();
+        offsetX = e.clientX - el.getBoundingClientRect().left;
+        offsetY = e.clientY - el.getBoundingClientRect().top;
+
+        document.onmousemove = function(e) {
+            let x = e.clientX - offsetX - el.parentElement.getBoundingClientRect().left;
+            let y = e.clientY - offsetY - el.parentElement.getBoundingClientRect().top;
+
+            // Όρια μέσα στο grid
+            x = Math.max(0, Math.min(x, el.parentElement.offsetWidth - el.offsetWidth));
+            y = Math.max(0, Math.min(y, el.parentElement.offsetHeight - el.offsetHeight));
+
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
+        }
+
+        document.onmouseup = function() {
+            document.onmousemove = null;
+            document.onmouseup = null;
+
+            // Αποθήκευση σε pixels
+            let posX = parseInt(el.style.left);
+            let posY = parseInt(el.style.top);
+            let computerId = el.dataset.id;
+
+            fetch("{% url 'update_computer_position' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: `id=${computerId}&pos_x=${posX}&pos_y=${posY}`
+            }).then(res => res.json())
+              .then(data => {
+                  if(data.status !== "success") alert(data.message);
+              });
+        }
+    }
+}
+
+// Εφαρμογή σε όλα τα computers
+document.querySelectorAll(".computer-box").forEach(makeDraggable);
+
+document.querySelectorAll('a.delete-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        if(!confirm('Είσαι σίγουρος ότι θέλεις να διαγράψεις;')) {
+            e.preventDefault(); // Ακυρώνει το link
+        }
+    });
+});
+
+const searchInput = document.getElementById("searchInput");
+let hasScrolled = false;
+
+searchInput.addEventListener("input", function () {
+  const query = this.value.toLowerCase().trim();
+  hasScrolled = false;
+
+  document.querySelectorAll(".computer-box").forEach(box => {
+    const ip = box.dataset.ip.toLowerCase();
+    const name = box.dataset.name.toLowerCase();
+    const roomWrapper = box.closest(".room-wrapper");
+
+    if (query === "") {
+      box.classList.remove("dimmed", "highlight");
+    } 
+    else if (ip.includes(query) || name.includes(query)) {
+      box.classList.add("highlight");
+      box.classList.remove("dimmed");
+
+      // 🔥 AUTO SCROLL ΣΤΗΝ ΑΙΘΟΥΣΑ
+      if (!hasScrolled && roomWrapper) {
+        roomWrapper.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+        hasScrolled = true;
+      }
+    } 
+    else {
+      box.classList.add("dimmed");
+      box.classList.remove("highlight");
+    }
+  });
+});
+</script>
+
+</body>
+</html>
