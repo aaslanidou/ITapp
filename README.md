@@ -29,9 +29,11 @@ The dashboard displays rooms and computers as **draggable boxes**, allowing you 
 5. Create a .env file in the root of the project with the following variables:
 DJANGO_SECRET_KEY=<your-secret-key>
 DEBUG=True
+
 6.You can generate a random secret key using Python:
 
 from django.core.management.utils import get_random_secret_key
+
 print(get_random_secret_key())
 
 7. Create and apply database migrations:  python manage.py makemigrations
