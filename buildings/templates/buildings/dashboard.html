@@ -12,86 +12,89 @@
     h1 { margin-bottom: 20px; }
     
     /* Κουμπιά Add */
-    .add-buttons a { 
-        display: inline-block; 
-        margin-right: 10px; 
-        padding: 5px 10px; 
-        background: #007BFF; 
-        color: white; 
-        text-decoration: none; 
-        border-radius: 4px;
-    }
-    .add-buttons a:hover { background: #0056b3; }
+.add-buttons a {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 8px 14px;
+  background: #007BFF;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.add-buttons a:hover { background: #0056b3; }
 
-    /* Wrapper για scroll */
-    .room-wrapper {
+/* Wrapper για scroll */
+.room-wrapper {
         width: 100%;
         overflow-x: auto;
         overflow-y: auto;
         margin-bottom: 50px;
     }
 
-    /* Σταθερή ή δυναμική αίθουσα */
-    .room-grid {
-        position: relative;
-        width: 1600px;   /* default, μπορεί να αλλάζει ανά room */
-        height: 900px;
-        border: 2px solid #555;
-        background: #2c2c2c;
-    }
+/* Σταθερή ή δυναμική αίθουσα */
+.room-grid {
+  position: relative;
+  width: 1600px;   /* default, μπορεί να αλλάζει ανά room */
+  height: 900px;
+  border: 2px solid #555;
+  background: #2c2c2c;
+  }
 
-    /* Computer box */
-    .computer-box {
-        position: absolute;
-    width: 80px;
-    height: 50px;
-    color: white;       
-    font-weight: bold;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-    overflow: hidden;
-    white-space: normal;
-    word-wrap: break-word;
-    font-size: 12px;
-    padding: 3px;
-    line-height: 14px;
-    }
+/* Computer box */
+.computer-box {
+  position: absolute;
+  width: 80px;
+  height: 50px;
+  color: white;       
+  font-weight: bold;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: normal;
+  word-wrap: break-word;
+  font-size: 12px;
+  padding: 3px;
+  line-height: 14px;
+  }
 
-    /* Χρώματα ανά status */
-    .computer-box.ok { background-color: #28a745; }       /* πράσινο */
-    .computer-box.warning { background-color: #ff9800; }  /* πορτοκαλί */
-    .computer-box.replace { background-color: #dc3545; }  /* κόκκινο */
+  /* Χρώματα ανά status */
+  .computer-box.ok { background-color: #28a745; }       /* πράσινο */
+  .computer-box.warning { background-color: #ff9800; }  /* πορτοκαλί */
+  .computer-box.replace { background-color: #dc3545; }  /* κόκκινο */
 
-    /* Edit/Delete links */
-    .computer-box a {
-        display: block;
-        font-size: 10px;
-        color: white;             
-        text-decoration: underline;
-        background: rgba(0,0,0,0.25); 
-        border-radius: 2px;
-        padding: 0 2px;
-        margin-top: 1px;
-    }
+  /* Edit/Delete links */
+  .computer-box a {
+    display: block;
+    font-size: 10px;
+    color: white;             
+    text-decoration: underline;
+    background: rgba(0,0,0,0.25); 
+    border-radius: 2px;
+    padding: 0 2px;
+    margin-top: 1px;
+   }
 
-    /* Modal */
-    #modal { 
-        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-        background: #2c2c2c; padding: 20px; border: 2px solid black; display: none; 
-        min-width: 300px; box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        z-index: 100;
-    }
-    #modal button { margin-top: 10px; padding: 5px 10px; }
+  /* Modal */
+  #modal { 
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: #2c2c2c; padding: 20px; border: 2px solid black; display: none; 
+    min-width: 300px; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    z-index: 100;
+  }
+  #modal button { margin-top: 10px; padding: 5px 10px; }
 
-    /* ACTION LINKS */
+/* ACTION LINKS */
 a.edit-link {
-  color: #ffc107;   /* amber / yellow */
+  color: #ffc107;
   font-weight: bold;
 }
 
 a.delete-link {
-  color: #ff4d4d;   /* κόκκινο */
+  color: #ff4d4d; 
   font-weight: bold;
 }
 
@@ -103,7 +106,7 @@ a.delete-link:hover {
   color: #ff0000;
 }
 
-/* Computer box links – neutral */
+/* Computer box links */
 .computer-box a {
   color: #f1f1f1;        
   font-weight: normal;
@@ -126,15 +129,15 @@ a.delete-link:hover {
 }
  
 .computer-box.team-leader {
-  width: 120px;     /* μεγαλύτερο */
+  width: 120px;   
   height: 70px;
   border: 2px solid gold;
 }
   
 .team-leader-label {
-    display: inline-flex;       /* inline και flex για σωστή στοίχιση */
-    align-items: center;        /* το checkbox ευθυγραμμισμένο με το κείμενο */
-    gap: 5px;                   /* μικρή απόσταση μεταξύ κειμένου και checkbox */
+    display: inline-flex;  /* inline και flex για σωστή στοίχιση */
+    align-items:center;   /* το checkbox ευθυγραμμισμένο με το κείμενο */
+    gap: 5px;             /* απόσταση μεταξύ κειμένου και checkbox */
     font-size: 12px;
 }
 
@@ -143,19 +146,52 @@ a.delete-link:hover {
     height: 16px;
     cursor: default;
 }
+
+/* Logout button */
+.logout-button {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.logout-button:hover {
+  background-color: #b71c1c;
+}
   
 </style>
 </head>
 <body>
-
 <h1>IT Dashboard</h1>
 
-<div class="add-buttons">
-  <a href="{% url 'add_building' %}">Add Building</a>
-  <a href="{% url 'add_room' %}">Add Room</a>
-  <a href="{% url 'add_computer' %}">Add Computer</a>
+<div class="add-buttons-wrapper" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+  <div class="add-buttons">
+    {% if perms.buildings.add_building %}
+    <a href="{% url 'add_building' %}">Add Building</a>
+    {% endif %}
+
+    {% if perms.buildings.add_room %}
+    <a href="{% url 'add_room' %}">Add Room</a>
+    {% endif %}
+
+    {% if perms.buildings.add_computer %}
+    <a href="{% url 'add_computer' %}">Add Computer</a>
+    {% endif %}
+  </div>
+
+  <form method="post" action="{% url 'logout' %}" style="margin:0;">
+    {% csrf_token %}
+    <button type="submit" class="logout-button">Logout</button>
+  </form>
+
 </div>
 <hr>
+
 <div style="margin: 15px 0;">
   <input
     type="text"
@@ -177,18 +213,27 @@ a.delete-link:hover {
 
     <h2>
       🏢 {{ building.name }} ({{ building.address }})
+      {% if perms.buildings.change_building %}
       <a href="{% url 'edit_building' building.id %}" class="edit-link">Edit</a>
+      {% endif %}
+
+      {% if perms.buildings.delete_building %}
       <a href="{% url 'delete_building' building.id %}" class="delete-link">Delete</a>
-      
+      {% endif %}
     </h2>
 
     {% for room in building.rooms.all %}
       <h3>
-        🧩 {{ room.name }}
+        📂 {{ room.name }}
+        {% if perms.buildings.change_room %}
         <a href="{% url 'edit_room' room.id %}" class="edit-link">Edit</a>
-        <a href="{% url 'delete_room' room.id %}" class="delete-link">Delete</a>
-      </h3>
+        {% endif %}
 
+        {% if perms.buildings.delete_room %}
+        <a href="{% url 'delete_room' room.id %}" class="delete-link">Delete</a>
+        {% endif %}
+      </h3>
+       
       <div class="room-wrapper" data-room="{{ room.id }}">
         <div class="room-grid"
              style="width: {{ room.width }}px; height: {{ room.height }}px;">
@@ -206,16 +251,24 @@ a.delete-link:hover {
                  data-status="{{ computer.status }}"
                  data-notes="{{ computer.notes }}"
                  style="left: {{ computer.pos_x }}px; top: {{ computer.pos_y }}px;">
-                  {{ computer.ip_address }}
-                  {% if computer.is_team_leader %}
+              
+                 {{ computer.ip_address }}
+                 {% if computer.is_team_leader %}
                     <span class="team-leader-label">
                     <b>Team Leader</b>
                     <input type="checkbox" checked disabled>
                     </span>
-                {% endif %}
-            <a href="{% url 'edit_computer' computer.id %}">Edit</a>
-            <a href="{% url 'delete_computer' computer.id %}" class="delete-link">Delete</a>
-           </div>
+                 {% endif %}
+
+                 {% if perms.buildings.change_computer %}   
+                 <a href="{% url 'edit_computer' computer.id %}">Edit</a>
+                 {% endif %}
+
+                 {% if perms.buildings.delete_computer %}
+                 <a href="{% url 'delete_computer' computer.id %}" class="delete-link">Delete</a>
+                 {% endif %}
+           
+            </div>
           {% endfor %}
 
         </div>
@@ -232,7 +285,7 @@ a.delete-link:hover {
 </div>
 
 <script>
-// --- Modal με double-click ---
+// Modal με double-click 
 document.querySelectorAll(".computer-box").forEach(box => {
     box.addEventListener("dblclick", () => {
         const ip = box.dataset.ip;
@@ -254,7 +307,7 @@ document.querySelectorAll(".computer-box").forEach(box => {
 
 
 
-// --- Drag-and-drop με single click ---
+// Drag-and-drop με single click
 function makeDraggable(el) {
     let offsetX, offsetY;
 

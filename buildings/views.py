@@ -2,14 +2,21 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Building, Room, Computer
 from .forms import BuildingForm, RoomForm, ComputerForm
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required , permission_required
+
+
+
 
 
 # Dashboard
+@login_required 
 def dashboard(request):
     buildings = Building.objects.prefetch_related('rooms__computers')
     return render(request, 'buildings/dashboard.html', {'buildings': buildings})
 
 # Building CRUD
+@login_required
+@permission_required('buildings.add_building', raise_exception=True)
 def add_building(request):
     if request.method == 'POST':
         form = BuildingForm(request.POST)
@@ -25,6 +32,8 @@ def add_building(request):
         'button_color': '#28a745'
     })
 
+@login_required
+@permission_required('buildings.change_building', raise_exception=True)
 def edit_building(request, pk):
     building = get_object_or_404(Building, pk=pk)
     if request.method == 'POST':
@@ -41,12 +50,15 @@ def edit_building(request, pk):
         'button_color': '#007BFF'
     })
 
+@permission_required('buildings.delete_building', raise_exception=True)
 def delete_building(request, pk):
     building = get_object_or_404(Building, pk=pk)
     building.delete()
     return redirect('dashboard')
 
 # Room CRUD
+@login_required
+@permission_required('buildings.add_room', raise_exception=True)
 def add_room(request):
     if request.method == 'POST':
         form = RoomForm(request.POST)
@@ -61,7 +73,8 @@ def add_room(request):
         'button_text': 'Add Room',
         'button_color': '#28a745'
     })
-
+@login_required
+@permission_required('buildings.change_room', raise_exception=True)
 def edit_room(request, pk):
     room = get_object_or_404(Room, pk=pk)
     if request.method == 'POST':
@@ -78,12 +91,15 @@ def edit_room(request, pk):
         'button_color': '#007BFF'
     })
 
+@permission_required('buildings.delete_room', raise_exception=True)
 def delete_room(request, pk):
      room = get_object_or_404(Room, pk=pk)
      room.delete()
      return redirect('dashboard')
 
 # Computer CRUD
+@login_required
+@permission_required('buildings.add_computer', raise_exception=True)
 def add_computer(request):
     if request.method == 'POST':
         form = ComputerForm(request.POST)
@@ -99,6 +115,8 @@ def add_computer(request):
         'button_color': '#28a745'
     })
 
+@login_required
+@permission_required('buildings.change_computer', raise_exception=True)
 def edit_computer(request, pk):
     computer = Computer.objects.get(id=pk)
     if request.method == "POST":
@@ -115,13 +133,14 @@ def edit_computer(request, pk):
         'button_color': '#007BFF'
     })
 
-
+@permission_required('buildings.delete_computer', raise_exception=True)
 def delete_computer(request, pk):
     computer = get_object_or_404(Computer, pk=pk)
     computer.delete()
     return redirect('dashboard')
 
-
+@login_required
+@permission_required('buildings.delete_computer', raise_exception=True)
 def update_computer_position(request):
     if request.method == "POST":
         computer_id = request.POST.get("id")
