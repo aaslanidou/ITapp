@@ -22,17 +22,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-load_dotenv()  # φορτώνει το .env αρχείο
+load_dotenv()  #loads .env file
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True #sos must be false when it passes the demo phase
 
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1').split(',')
+ALLOWED_HOSTS = [
+     "127.0.0.1",
+    "localhost",
+    "192.168.1.34", #local server ip address
+    "your-domain.company.gr",
+]
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -54,6 +58,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 TEMPLATES = [
     {
@@ -126,13 +131,25 @@ LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
 
+#sessions
+CSRF_COOKIE_SECURE = False     # True when using https
+SESSION_COOKIE_SECURE = False  # True when using https
+SESSION_COOKIE_AGE = 60 * 60
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
-CSRF_COOKIE_SECURE = False   # True όταν έχει HTTPS
-SESSION_COOKIE_SECURE = False
-
+SECURE_SSL_REDIRECT = False #only for demo. when ssl in use make it true
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
+
 X_FRAME_OPTIONS = 'DENY'
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://your-domain.company.gr",
+    "https://192.168.1.34:8000", #or local server ip address
+]# must replace with actual domain.
+
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
